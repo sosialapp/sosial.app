@@ -5,78 +5,513 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sosial — Plan, design &amp; publish social posts</title>
 <meta name="description" content="Sosial by Egate Worldwide — plan, design, schedule and publish posts across Facebook, Instagram, Threads, TikTok, X, Bluesky, LinkedIn, Mastodon, Pinterest and YouTube." />
+<meta name="theme-color" content="#0b0a08" />
+<meta property="og:title" content="Sosial — Plan, design & publish social posts" />
+<meta property="og:description" content="One calm workspace to design, schedule and publish across 10 channels. Your content stays on your device." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="/logo.png" />
 <link rel="icon" type="image/png" href="/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
-  :root { --ink: #f5f5f4; --muted: #a8a29e; --bg: #0c0a09; --card: #1c1917; --line: #292524; --gold: #fdd705; }
+  :root {
+    --bg: #0b0a08;
+    --surface: #141210;
+    --surface-2: #1c1917;
+    --line: #292524;
+    --ink: #f5f4f0;
+    --muted: #a8a29e;
+    --gold: #fdd705;
+    --gold-ink: #0b0a08;
+    --r-lg: 22px;
+    --r-md: 14px;
+    --font-d: "Space Grotesk", system-ui, -apple-system, sans-serif;
+    --font-b: "Inter", system-ui, -apple-system, sans-serif;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 72px 24px 80px; text-align: center; }
-  .logo { width: 96px; height: 96px; }
-  .kicker { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-top: 24px; }
-  h1 { font-size: 42px; line-height: 1.15; margin: 12px 0 16px; letter-spacing: -0.5px; }
-  .sub { color: var(--muted); font-size: 18px; margin-bottom: 32px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; text-align: left; margin: 32px 0; }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
-  .card h2 { font-size: 18px; margin-bottom: 8px; color: var(--gold); }
-  .card p, .card li { color: var(--muted); font-size: 15px; }
-  ul { list-style: none; }
-  ul li { padding: 6px 0 6px 26px; position: relative; }
-  ul li::before { content: "✓"; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 8px 0 32px; }
-  .chip { border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 14px; color: var(--muted); }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-b); background: var(--bg); color: var(--ink); line-height: 1.65; overflow-x: hidden; }
+  ::selection { background: var(--gold); color: var(--gold-ink); }
+
+  /* film grain over everything */
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: .05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  }
+
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
   a { color: var(--gold); }
-  footer { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
-  footer a { margin: 0 8px; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+
+  /* ---------- nav ---------- */
+  nav { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: background .25s, border-color .25s; border-bottom: 1px solid transparent; }
+  nav.scrolled { background: rgba(11,10,8,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom-color: var(--line); }
+  .nav-in { max-width: 1160px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 28px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-family: var(--font-d); font-weight: 700; font-size: 19px; letter-spacing: -.02em; }
+  .brand img { width: 30px; height: 30px; }
+  .nav-links { display: flex; gap: 22px; margin-left: auto; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { font-size: 14px; font-weight: 600; color: var(--gold-ink); background: var(--gold); text-decoration: none; padding: 9px 18px; border-radius: 999px; transition: transform .2s, box-shadow .2s; }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(253,215,5,.28); }
+  .nav-cta:active { transform: scale(.97); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; padding: 168px 0 72px; overflow: hidden; }
+  .orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+  .orb-a { width: 520px; height: 520px; left: -160px; top: -120px; background: radial-gradient(circle, rgba(253,215,5,.14), transparent 65%); animation: drift 14s ease-in-out infinite alternate; }
+  .orb-b { width: 620px; height: 620px; right: -220px; top: 40px; background: radial-gradient(circle, rgba(253,215,5,.08), transparent 65%); animation: drift 18s ease-in-out infinite alternate-reverse; }
+  @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(60px,40px) scale(1.08); } }
+  .hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+  .kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-weight: 600; border: 1px solid rgba(253,215,5,.35); border-radius: 999px; padding: 7px 15px; }
+  .kicker .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: pulse 2.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+  h1 { font-family: var(--font-d); font-size: clamp(42px, 6vw, 68px); line-height: 1.04; letter-spacing: -.03em; margin: 22px 0 18px; text-wrap: balance; }
+  h1 em { font-style: italic; color: var(--gold); }
+  .lede { color: var(--muted); font-size: 18px; max-width: 34rem; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+  .btn { display: inline-flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15.5px; text-decoration: none; padding: 14px 26px; border-radius: 999px; transition: transform .2s, box-shadow .2s, background .2s; }
+  .btn-solid { background: var(--gold); color: var(--gold-ink); }
+  .btn-solid:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(253,215,5,.3); }
+  .btn-solid:active { transform: scale(.98); }
+  .btn-ghost { border: 1px solid var(--line); color: var(--ink); background: rgba(255,255,255,.02); }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: var(--gold); }
+  .btn-ghost:active { transform: scale(.98); }
+  .hero-note { margin-top: 16px; font-size: 13.5px; color: var(--muted); }
+
+  /* phone mock */
+  .stage { position: relative; display: flex; justify-content: center; }
+  .phone { width: min(320px, 78vw); background: var(--surface); border: 1px solid var(--line); border-radius: 30px; padding: 18px 16px 20px; box-shadow: 0 40px 90px rgba(0,0,0,.55), 0 0 0 8px rgba(255,255,255,.015); animation: hover 6s ease-in-out infinite; }
+  @keyframes hover { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-12px) rotate(1deg); } }
+  .phone-top { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .phone-top img { width: 34px; height: 34px; border-radius: 10px; }
+  .phone-top b { display: block; font-size: 13.5px; }
+  .phone-top span { display: block; font-size: 11.5px; color: var(--muted); }
+  .live { margin-left: auto; font-size: 10.5px; font-weight: 600; letter-spacing: .08em; color: var(--gold); border: 1px solid rgba(253,215,5,.4); padding: 3px 9px; border-radius: 999px; }
+  .postcard { border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--line); background:
+      radial-gradient(circle at 20% 15%, rgba(253,215,5,.16), transparent 55%), var(--surface-2); }
+  .postcard .dots { height: 118px; background-image: radial-gradient(rgba(245,244,240,.16) 1.5px, transparent 1.5px); background-size: 18px 18px; position: relative; }
+  .postcard .dots::after { content: "Q3 launch plan"; position: absolute; left: 14px; bottom: 10px; font-family: var(--font-d); font-weight: 700; font-size: 19px; letter-spacing: -.01em; }
+  .bars { display: flex; align-items: flex-end; gap: 8px; height: 74px; padding: 14px 14px 0; }
+  .bars i { flex: 1; border-radius: 5px 5px 0 0; background: linear-gradient(180deg, var(--gold), rgba(253,215,5,.25)); transform-origin: bottom; animation: grow 2.6s ease-in-out infinite alternate; }
+  .bars i:nth-child(1) { height: 42%; } .bars i:nth-child(2) { height: 68%; animation-delay: .3s; }
+  .bars i:nth-child(3) { height: 52%; animation-delay: .6s; } .bars i:nth-child(4) { height: 86%; animation-delay: .9s; }
+  .bars i:nth-child(5) { height: 64%; animation-delay: 1.2s; }
+  @keyframes grow { from { transform: scaleY(.82); } to { transform: scaleY(1); } }
+  .postmeta { display: flex; align-items: center; gap: 8px; padding: 12px 14px; font-size: 12px; color: var(--muted); }
+  .wm { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; border: 1px dashed var(--line); border-radius: 999px; padding: 3px 10px; }
+  .wm img { width: 14px; height: 14px; }
+  .chip-float { position: absolute; display: inline-flex; align-items: center; gap: 8px; background: rgba(28,25,23,.85); border: 1px solid var(--line); backdrop-filter: blur(8px); border-radius: 999px; padding: 8px 14px 8px 9px; font-size: 12.5px; font-weight: 600; box-shadow: 0 14px 34px rgba(0,0,0,.5); animation: hover 7s ease-in-out infinite; }
+  .chip-float svg { width: 22px; height: 22px; }
+  .cf-1 { left: -8px; top: 12%; }
+  .cf-2 { right: -14px; top: 44%; animation-delay: 1.4s; }
+  .cf-3 { left: 6%; bottom: 6%; animation-delay: 2.6s; }
+  @media (max-width: 900px) { .cf-1 { left: 0; } .cf-2 { right: 0; } }
+
+  /* ---------- marquee ---------- */
+  .marquee-band { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.012); overflow: hidden; padding: 20px 0; margin-top: 40px; }
+  .marquee { display: flex; gap: 14px; width: max-content; animation: slide 32s linear infinite; }
+  .marquee-band:hover .marquee { animation-play-state: paused; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+  .m-item { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 9px 18px 9px 10px; font-size: 13.5px; font-weight: 500; color: var(--muted); white-space: nowrap; transition: color .2s, border-color .2s, transform .2s; }
+  .m-item:hover { color: var(--ink); border-color: var(--gold); transform: translateY(-2px); }
+  .m-item svg { width: 26px; height: 26px; }
+
+  /* ---------- sections ---------- */
+  section.block { padding: 96px 0 8px; }
+  .sec-head { max-width: 640px; margin-bottom: 48px; }
+  .sec-head.right { margin-left: auto; text-align: right; }
+  .sec-tag { font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+  h2 { font-family: var(--font-d); font-size: clamp(30px, 4vw, 44px); line-height: 1.1; letter-spacing: -.025em; margin: 12px 0 14px; text-wrap: balance; }
+  .sec-head p { color: var(--muted); font-size: 17px; }
+
+  /* zig-zag feature rows */
+  .feat { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-bottom: 72px; }
+  .feat.flip > .feat-copy { order: 2; }
+  @media (max-width: 860px) { .feat { grid-template-columns: 1fr; gap: 24px; } .feat.flip > .feat-copy { order: 0; } }
+  .feat-copy h3 { font-family: var(--font-d); font-size: 25px; letter-spacing: -.015em; margin-bottom: 10px; }
+  .feat-copy p { color: var(--muted); font-size: 16px; max-width: 30rem; }
+  .feat-copy ul { list-style: none; margin-top: 16px; }
+  .feat-copy li { position: relative; padding: 7px 0 7px 28px; font-size: 15px; }
+  .feat-copy li::before { content: "✓"; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+  .visual { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); padding: 26px; position: relative; overflow: hidden; }
+  .visual::before { content: ""; position: absolute; inset: 0; background: radial-gradient(420px 200px at var(--mx, 70%) var(--my, 0%), rgba(253,215,5,.09), transparent 70%); opacity: 0; transition: opacity .3s; pointer-events: none; }
+  .visual:hover::before { opacity: 1; }
+  .mini-row { display: flex; gap: 10px; margin-bottom: 12px; }
+  .mini { flex: 1; border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-2); padding: 14px; font-size: 13px; }
+  .mini b { display: block; font-size: 20px; font-family: var(--font-d); font-variant-numeric: tabular-nums; }
+  .mini span { color: var(--muted); }
+  .sched { display: flex; flex-direction: column; gap: 9px; }
+  .sched div { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 13px; font-size: 13.5px; background: var(--surface-2); }
+  .sched .t { margin-left: auto; color: var(--gold); font-variant-numeric: tabular-nums; font-weight: 600; }
+  .pill-ok { font-size: 11px; font-weight: 600; background: rgba(253,215,5,.13); color: var(--gold); border-radius: 6px; padding: 2px 8px; }
+
+  /* workflow strip */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; counter-reset: step; }
+  @media (max-width: 860px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+  .step { border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface); padding: 20px; transition: transform .2s, border-color .2s; }
+  .step:hover { transform: translateY(-4px); border-color: rgba(253,215,5,.5); }
+  .step .n { font-family: var(--font-d); font-size: 13px; color: var(--gold); font-variant-numeric: tabular-nums; letter-spacing: .1em; }
+  .step b { display: block; font-size: 16.5px; margin: 8px 0 6px; }
+  .step p { font-size: 13.5px; color: var(--muted); }
+
+  /* stats band */
+  .band { margin-top: 88px; border: 1px solid var(--line); border-radius: var(--r-lg); background: linear-gradient(180deg, rgba(253,215,5,.06), transparent 60%), var(--surface); padding: 40px 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: center; }
+  @media (max-width: 640px) { .band { grid-template-columns: 1fr; } }
+  .band b { display: block; font-family: var(--font-d); font-size: clamp(34px, 4.5vw, 50px); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .band b i { font-style: normal; color: var(--gold); }
+  .band span { color: var(--muted); font-size: 14.5px; }
+
+  /* pricing */
+  .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+  @media (max-width: 860px) { .tiers { grid-template-columns: 1fr; } }
+  .tier { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); padding: 28px 26px; display: flex; flex-direction: column; transition: transform .2s, border-color .2s, box-shadow .2s; }
+  .tier:hover { transform: translateY(-4px); }
+  .tier.hot { background: var(--gold); color: var(--gold-ink); border-color: var(--gold); box-shadow: 0 24px 60px rgba(253,215,5,.16); }
+  .tier .flag { align-self: flex-start; font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: var(--gold-ink); color: var(--gold); border-radius: 6px; padding: 4px 10px; margin-bottom: 14px; }
+  .tier h3 { font-family: var(--font-d); font-size: 22px; }
+  .tier .price { font-family: var(--font-d); font-size: 34px; margin: 8px 0 2px; letter-spacing: -.02em; }
+  .tier .per { font-size: 13px; opacity: .75; margin-bottom: 16px; }
+  .tier ul { list-style: none; margin-bottom: 24px; }
+  .tier li { position: relative; padding: 6px 0 6px 26px; font-size: 14px; }
+  .tier li::before { content: "✓"; position: absolute; left: 0; font-weight: 700; color: var(--gold); }
+  .tier.hot li::before { color: var(--gold-ink); }
+  .tier .btn { margin-top: auto; justify-content: center; }
+  .tier.hot .btn-solid { background: var(--gold-ink); color: var(--gold); box-shadow: none; }
+  .tier-note { margin-top: 18px; font-size: 13.5px; color: var(--muted); text-align: center; }
+
+  /* privacy + contact cards */
+  .duo { display: grid; grid-template-columns: 1.2fr .8fr; gap: 16px; }
+  @media (max-width: 860px) { .duo { grid-template-columns: 1fr; } }
+  .panel { border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); padding: 30px 28px; position: relative; overflow: hidden; }
+  .panel::before { content: ""; position: absolute; inset: 0; background: radial-gradient(420px 220px at var(--mx, 20%) var(--my, 0%), rgba(253,215,5,.08), transparent 70%); opacity: 0; transition: opacity .3s; pointer-events: none; }
+  .panel:hover::before { opacity: 1; }
+  .panel h3 { font-family: var(--font-d); font-size: 22px; margin-bottom: 10px; }
+  .panel p { color: var(--muted); font-size: 15px; }
+  .panel .links { margin-top: 18px; display: flex; gap: 18px; font-size: 14.5px; font-weight: 600; }
+
+  footer { margin: 88px 0 0; border-top: 1px solid var(--line); padding: 30px 0 44px; }
+  .foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; font-size: 14px; color: var(--muted); }
+  .foot .brand { font-size: 16px; }
+  .foot .spacer { margin-left: auto; }
+  .foot a { color: var(--muted); text-decoration: none; }
+  .foot a:hover { color: var(--ink); }
+
+  /* reveal on scroll */
+  .rv { opacity: 0; transform: translateY(26px); }
+  .rv.in { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+  .hero .rv { animation: rise .8s cubic-bezier(.2,.7,.2,1) forwards; animation-delay: var(--d, 0s); }
+  @keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .rv, .hero .rv { opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <img class="logo" src="/logo.png" alt="Sosial logo" />
-  <div class="kicker">Egate Worldwide</div>
-  <h1>Plan, design &amp; publish — everywhere.</h1>
-  <p class="sub">Sosial is your personal social posting companion: design creatives, write captions, schedule the queue, and publish through official platform APIs — from one calm workspace.</p>
 
-  <div class="chips">
-    <span class="chip">Facebook</span><span class="chip">Instagram</span><span class="chip">Threads</span><span class="chip">TikTok</span><span class="chip">X</span><span class="chip">Bluesky</span><span class="chip">LinkedIn</span><span class="chip">Mastodon</span><span class="chip">Pinterest</span><span class="chip">YouTube</span>
-  </div>
-
-  <div class="grid">
-    <div class="card">
-      <h2>Create</h2>
-      <ul>
-        <li>Infographic designer with pages &amp; charts</li>
-        <li>Captions, AI drafts &amp; ideas inbox</li>
-      </ul>
+<nav id="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top"><img src="/logo.png" alt="Sosial logo" />Sosial</a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#privacy">Privacy</a>
     </div>
-    <div class="card">
-      <h2>Schedule</h2>
-      <ul>
-        <li>Queue, drafts &amp; team approvals</li>
-        <li>Per-channel formats: reels, stories, shorts</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2>Measure</h2>
-      <ul>
-        <li>Followers, engagement &amp; comments</li>
-        <li>Per-post stats across channels</li>
-      </ul>
-    </div>
+    <a class="nav-cta" href="mailto:hello@sosial.app?subject=Sosial%20early%20access">Get early access</a>
   </div>
+</nav>
 
-  <div class="card" style="text-align:left">
-    <h2>Private by design</h2>
-    <p style="margin:0">Sosial is a single-user personal tool. Your designs, scheduled posts and connected accounts stay on your own device — we operate no servers that receive your content, and we never sell or share your data. Read the full <a href="/privacy.html">Privacy Policy</a> and <a href="/terms.html">Terms of Service</a>.</p>
+<header class="hero" id="top">
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker rv" style="--d:.05s"><span class="dot"></span>By Egate Worldwide</span>
+      <h1 class="rv" style="--d:.12s">Every channel.<br />One calm <em>workspace.</em></h1>
+      <p class="lede rv" style="--d:.2s">Sosial plans, designs, schedules and publishes your posts across 10 social platforms through their official APIs — queue it once, and it goes out everywhere it should.</p>
+      <div class="cta-row rv" style="--d:.28s">
+        <a class="btn btn-solid" href="mailto:hello@sosial.app?subject=Sosial%20early%20access">Get early access →</a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+      <p class="hero-note rv" style="--d:.34s">Free to start · No account needed to look around · Your content stays on your device</p>
+    </div>
+    <div class="stage rv" style="--d:.3s" aria-hidden="true">
+      <div class="phone">
+        <div class="phone-top">
+          <img src="/logo.png" alt="" />
+          <div><b>Q3 launch</b><span>9:16 story · 3 pages</span></div>
+          <span class="live">QUEUED</span>
+        </div>
+        <div class="postcard">
+          <div class="dots"></div>
+          <div class="bars"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="postmeta">
+            <span>1,284 likes · 96 comments</span>
+            <span class="wm"><img src="/logo.png" alt="" />made with Sosial</span>
+          </div>
+        </div>
+      </div>
+      <span class="chip-float cf-1"><svg viewBox="0 0 24 24" fill="#fe2c55"><path d="M16.6 3c.4 2.1 1.8 3.6 4 3.9v3c-1.6 0-3-.5-4-1.3v6.1c0 3.6-2.6 6.1-6 6.1-3.3 0-5.9-2.6-5.9-5.9 0-3.4 2.7-6 6.2-5.8v3.1c-1.7-.3-3.1 1-3.1 2.7 0 1.6 1.2 2.8 2.8 2.8 1.7 0 2.9-1.3 2.9-3V3h3.1z"/></svg>TikTok · Published</span>
+      <span class="chip-float cf-2"><svg viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="#e1306c" stroke="none"/></svg>Instagram · Scheduled</span>
+      <span class="chip-float cf-3"><svg viewBox="0 0 24 24" fill="#fff"><path d="M17.8 3h3l-6.7 7.7L22 21h-6.2l-4.8-6.3L5.4 21h-3l7.2-8.2L2 3h6.4l4.4 5.8L17.8 3zm-1.1 16.1h1.7L7.4 4.8H5.6l11.1 14.3z"/></svg>X · 2.4k views</span>
+    </div>
   </div>
+</header>
 
-  <div class="card" style="text-align:left">
-    <h2>Contact</h2>
-    <p style="margin:0">Egate Worldwide<br />Questions about Sosial? Email us at <a href="mailto:hello@sosial.app">hello@sosial.app</a>.</p>
+<div class="marquee-band" aria-label="Supported platforms">
+  <div class="marquee" id="marquee">
+    <span class="m-item"><svg viewBox="0 0 24 24" fill="#1877f2"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.3-1.5 1.6-1.5h1.3V4.9c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8V11H8v3h2.5v7h3z"/></svg>Facebook</span>
+    <span class="m-item"><svg viewBox="0 0 24 24" fill="none" stroke="#e1306c" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="#e1306c" stroke="none"/></svg>Instagram</span>
+    <span class="m-item"><svg viewBox="0 0 24 24" fill="#f5f4f0"><text x="12" y="17" text-anchor="middle" font-size="15" font-weight="800" font-family="Inter,sans-serif">@</text></svg>Threads</span>
+    <span class="m-item"><svg viewBox="0 0 24 24" fill="#fe2c55"><path d="M16.6 3c.4 2.1 1.8 3.6 4 3.9v3c-1.6 0-3-.5-4-1.3v6.1c0 3.6-2.6 6.1-6 6.1-3.3 0-5.9-2.6-5.9-5.9 0-3.4 2.7-6 6.2-5.8v3.1c-1.7-.3-3.1 1-3.1 2.7 0 1.6 1.2 2.8 2.8 2.8 1.7 0 2.9-1.3 2.9-3V3h3.1z"/></svg>TikTok</span>
+    <span class="m-item"><svg viewBox="0 0 24 24" fill="#f5f4f0"><path d="M17.8 3h3l-6.7 7.7L22 21h-6.2l-4.8-6.3L5.4 21h-3l7.2-8.2L2 3h6.4l4.4 5.8L17.8 3zm-1.1 16.1h1.7L7.4 4.8H5.6l11.1 14.3z"/></svg>X</span>
+    <span class="m-item"><svg viewBox="0 0 24 24" fill="#0285ff"><path d="M12 10.8C10.7 8.6 8.2 7 5.5 7c-.4 0-.5.3-.4.7l1.2 4.7c.5 1.9 1.4 3.6 2.6 4.9l3.1-6.5zm0 0c1.3-2.2 3.8-3.8 6.5-3.8.4 0 .5.3.4.7l-1.2 4.7c-.5 1.9-1.4 3.6-2.6 4.9L12 10.8zm0 0l-2.6 5.4c-.4.9 0 1.9 1 2.3.3.1.7.2 1 .2h1.2c.3 0 .7-.1 1-.2 1-.4 1.4-1.4 1-2.3L12 10.8z"/></svg>Bluesky</span>
+    <span class="m-item"><svg viewBox="0 0 24 24" fill="#0a66c2"><path d="M4 3h4v4H4V3zm0 5h4v13H4V8zm6 0h3.8v1.8h.1c.5-1 1.8-2 3.7-2 2.6 0 4.4 1.6 4.4 5.2v8H18v-7.3c0-1.9-.8-3-2.4-3-1.7 0-2.6 1.1-2.6 3V21h-4V8z" transform="translate(-1,0) scale(.92)"/></svg>LinkedIn</span>
+    <span class="m-item"><svg viewBox="0 0 24 24" fill="#6364ff"><text x="12" y="17.5" text-anchor="middle" font-size="14" font-weight="800" font-family="Inter,sans-serif">m</text></svg>Mastodon</span>
+    <span class="m-item"><svg viewBox="0 0 24 24" fill="#e60023"><text x="12" y="17.5" text-anchor="middle" font-size="15" font-weight="800" font-family="Georgia,serif">P</text></svg>Pinterest</span>
+    <span class="m-item"><svg viewBox="0 0 24 24" fill="#ff0033"><path d="M22 8.2s-.2-1.5-.8-2.1c-.8-.8-1.6-.8-2-.9C16.4 5 12 5 12 5s-4.4 0-7.2.2c-.4.1-1.2.1-2 .9C2.2 6.7 2 8.2 2 8.2S1.8 10 1.8 11.7v1.6C1.8 15 2 16.8 2 16.8s.2 1.5.8 2.1c.8.8 1.8.8 2.2.9 1.6.2 7 .2 7 .2s4.4 0 7.2-.2c.4-.1 1.2-.1 2-.9.6-.6.8-2.1.8-2.1s.2-1.8.2-3.5v-1.6C22.2 10 22 8.2 22 8.2zM9.9 14.9V9.5l5.4 2.7-5.4 2.7z"/></svg>YouTube</span>
   </div>
+</div>
+
+<main class="wrap">
+  <section class="block" id="features">
+    <div class="sec-head rv">
+      <div class="sec-tag">Features</div>
+      <h2>Built for people who post everywhere.</h2>
+      <p>Design once, tailor per channel, and let the queue handle the timing.</p>
+    </div>
+
+    <div class="feat rv">
+      <div class="feat-copy">
+        <h3>Design posts that look made, not made-do.</h3>
+        <p>Infographic pages with charts, tables, brand patterns and your handles baked in — sized for square, portrait, story and landscape in one tap.</p>
+        <ul>
+          <li>Multi-page carousels with per-page sizing</li>
+          <li>Bar, pie and table blocks from your numbers</li>
+          <li>AI drafts when you stare at a blank page</li>
+        </ul>
+      </div>
+      <div class="visual spot">
+        <div class="mini-row">
+          <div class="mini"><b>3</b><span>pages</span></div>
+          <div class="mini"><b>9:16</b><span>story fit</span></div>
+          <div class="mini"><b>4.9★</b><span>internal rating</span></div>
+        </div>
+        <div class="sched">
+          <div>♥ Engagement <span class="t">▲ 18%</span></div>
+          <div>◷ Avg. design time <span class="t">4 min</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feat flip rv">
+      <div class="feat-copy">
+        <h3>A queue that respects each channel.</h3>
+        <p>One composer, per-channel formats: reels and stories where they belong, video pins on Pinterest, shorts on YouTube. Approvals included for teams.</p>
+        <ul>
+          <li>Drafts, queue, approvals and sent — one timeline</li>
+          <li>Reminders plus automatic publishing</li>
+          <li>Per-channel captions, privacy and listing</li>
+        </ul>
+      </div>
+      <div class="visual spot">
+        <div class="sched">
+          <div>◷ TikTok video <span class="t">Today 18:30</span></div>
+          <div>◷ Instagram reel <span class="t">Today 19:00</span></div>
+          <div>◷ LinkedIn post <span class="pill-ok">APPROVED</span><span class="t">Tomorrow 09:00</span></div>
+          <div>◷ Pinterest pins ×4 <span class="t">Tomorrow 12:00</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feat rv">
+      <div class="feat-copy">
+        <h3>Know what landed, per post.</h3>
+        <p>Followers, likes, comments, views and saves pulled from official APIs — per channel and per post, with the comments that matter surfaced in one feed.</p>
+        <ul>
+          <li>Channel cards with follower counts</li>
+          <li>Per-post engagement on everything sent</li>
+          <li>Ranges from today to the full year</li>
+        </ul>
+      </div>
+      <div class="visual spot">
+        <div class="mini-row">
+          <div class="mini"><b data-count="10">0</b><span>channels</span></div>
+          <div class="mini"><b><span data-count="1284">0</span></b><span>likes tracked</span></div>
+          <div class="mini"><b><span data-count="96">0</span></b><span>comments</span></div>
+        </div>
+        <div class="bars" style="height:90px"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <div class="sec-head rv">
+      <div class="sec-tag">How it works</div>
+      <h2>Four steps, no dashboard gymnastics.</h2>
+    </div>
+    <div class="steps">
+      <div class="step rv" style="--d:0s"><div class="n">01</div><b>Connect</b><p>Link your pages and profiles once through official logins. Tokens stay locked on your device.</p></div>
+      <div class="step rv" style="--d:.08s"><div class="n">02</div><b>Compose</b><p>Design the creative, write one caption, tune the format per channel.</p></div>
+      <div class="step rv" style="--d:.16s"><div class="n">03</div><b>Schedule</b><p>Post now or queue it. Approvals route to an owner before anything goes out.</p></div>
+      <div class="step rv" style="--d:.24s"><div class="n">04</div><b>Measure</b><p>Watch likes, comments, views and saves roll in per post and per channel.</p></div>
+    </div>
+
+    <div class="band rv">
+      <div><b><span data-count="10">0</span><i>/10</i></b><span>channels connected from one app</span></div>
+      <div><b><span data-count="100">0</span><i>%</i></b><span>of your content stays on your device</span></div>
+      <div><b>0<i> trackers</i></b><span>no analytics SDKs, no ads, no data brokers</span></div>
+    </div>
+  </section>
+
+  <section class="block" id="pricing">
+    <div class="sec-head rv">
+      <div class="sec-tag">Pricing</div>
+      <h2>Start free. Pay per channel you grow.</h2>
+      <p>Upgrade only the channels that earn their keep. Prices in USD — local pricing shown in app.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier rv" style="--d:0s">
+        <h3>Free</h3>
+        <div class="price">$0</div>
+        <div class="per">forever, for trying things out</div>
+        <ul>
+          <li>2 connected channels</li>
+          <li>10 scheduled posts per channel</li>
+          <li>7-day analytics</li>
+          <li>Made-with-Sosial badge on exports</li>
+        </ul>
+        <a class="btn btn-ghost" href="mailto:hello@sosial.app?subject=Sosial%20Free">Start free</a>
+      </div>
+      <div class="tier hot rv" style="--d:.08s">
+        <div class="flag">Most popular</div>
+        <h3>Pro</h3>
+        <div class="price">$4.99</div>
+        <div class="per">per channel / month · or $49 / year</div>
+        <ul>
+          <li>Unlimited scheduling (fair use)</li>
+          <li>Full-year analytics + comments</li>
+          <li>500 AI generations / month</li>
+          <li>No watermark, unlimited history</li>
+        </ul>
+        <a class="btn btn-solid" href="mailto:hello@sosial.app?subject=Sosial%20Pro">Go Pro</a>
+      </div>
+      <div class="tier rv" style="--d:.16s">
+        <h3>Team</h3>
+        <div class="price">$9.99</div>
+        <div class="per">per channel / month · or $99 / year</div>
+        <ul>
+          <li>Everything in Pro</li>
+          <li>Seats + approval workflow</li>
+          <li>1,000 AI generations / month</li>
+          <li>Priority support</li>
+        </ul>
+        <a class="btn btn-ghost" href="mailto:hello@sosial.app?subject=Sosial%20Team">Talk to us</a>
+      </div>
+    </div>
+    <p class="tier-note rv">Publishing runs on official platform APIs, so some channels carry their own platform limits — the app always tells you before you hit one.</p>
+  </section>
+
+  <section class="block" id="privacy">
+    <div class="duo">
+      <div class="panel spot rv">
+        <h3>Private by design.</h3>
+        <p>Sosial is a single-user personal tool. Designs, captions, schedules and account tokens live on your device in secure storage — no servers receiving your content, no analytics SDKs, no ads, nothing sold. Disconnect a channel and its credentials are gone.</p>
+        <div class="links"><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div>
+      </div>
+      <div class="panel spot rv" style="--d:.1s" id="contact">
+        <h3>Talk to a human.</h3>
+        <p>Egate Worldwide builds Sosial. Questions, review queries, deletion requests — one inbox.</p>
+        <div class="links"><a href="mailto:hello@sosial.app">hello@sosial.app</a></div>
+      </div>
+    </div>
+  </section>
 
   <footer>
-    © 2026 Egate Worldwide · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a>
+    <div class="foot">
+      <a class="brand" href="#top"><img src="/logo.png" alt="Sosial logo" style="width:24px;height:24px" />Sosial</a>
+      <span>© 2026 Egate Worldwide</span>
+      <span class="spacer"></span>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="mailto:hello@sosial.app">Contact</a>
+    </div>
   </footer>
-</div>
+</main>
+
+<script>
+  // duplicate marquee content for a seamless loop
+  (function () {
+    var m = document.getElementById('marquee');
+    m.innerHTML += m.innerHTML;
+  })();
+
+  // sticky nav state
+  (function () {
+    var nav = document.getElementById('nav');
+    var onScroll = function () { nav.classList.toggle('scrolled', window.scrollY > 24); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  // scroll reveals
+  (function () {
+    var els = document.querySelectorAll('.rv');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(function (e) { e.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (e) { io.observe(e); });
+  })();
+
+  // animated counters
+  (function () {
+    var els = document.querySelectorAll('[data-count]');
+    if (!('IntersectionObserver' in window)) return;
+    var fmt = function (n) { return n.toLocaleString('en-US'); };
+    var run = function (el) {
+      var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+      var t0 = null, dur = 1200;
+      var tick = function (t) {
+        if (!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(Math.round(target * eased));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { run(en.target); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.4 });
+    els.forEach(function (e) { io.observe(e); });
+  })();
+
+  // spotlight cards follow the cursor
+  (function () {
+    document.querySelectorAll('.spot').forEach(function (card) {
+      card.addEventListener('pointermove', function (ev) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', ((ev.clientX - r.left) / r.width * 100) + '%');
+        card.style.setProperty('--my', ((ev.clientY - r.top) / r.height * 100) + '%');
+      });
+    });
+  })();
+</script>
 </body>
 </html>
