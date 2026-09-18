@@ -39,11 +39,12 @@
     <li>your notification preferences;</li>
     <li>account timestamps (created, last signed in).</li>
   </ul>
-  <p>Passwords are stored only as irreversible hashes by our authentication provider — never in readable form — and database rules (row-level security) ensure each account can see only its own rows. We hold no post designs, captions, photos or videos on our servers, and your social-channel tokens never leave your device.</p>
+  <p>Passwords are stored only as irreversible hashes by our authentication provider — never in readable form — and database rules (row-level security) ensure each account can see only its own rows. We hold no post designs, captions, photos or videos on our servers.</p>
+  <p><strong>Optional cloud publishing:</strong> each connected channel has a per-channel <em>Cloud publishing</em> switch (off by default). Turning it on stores an <strong>encrypted copy</strong> of that channel's access tokens in our token vault (Supabase Vault, Singapore) so our worker can publish for you when the app is closed. The plaintext is never readable by other users or by us through any normal interface; only the publish worker can decrypt it at publish time. Turning the switch off — or disconnecting the channel — deletes the cloud copy and its secrets immediately. Your device always keeps its own copy regardless.</p>
 
   <h2>2. Connected social accounts</h2>
   <p>To publish on your behalf, the app connects to third-party platforms using their official login flows. You connect each account yourself, one at a time, and each connection asks your permission first. Login happens in your browser through an intermediate page on this website (<a href="/auth.html">sosial.app/auth.html</a>), which only forwards the login code back to the app — it stores nothing.</p>
-  <p>Access tokens granted during login are kept in your device's secure storage (iOS Keychain / Android Keystore via the operating system) and are used only to (a) publish posts you explicitly create or schedule, and (b) read statistics for posts and accounts you choose to view. We never access accounts you have not connected, and we never publish anything you did not authorise. Each platform's handling of your data is governed by that platform's own privacy policy.</p>
+  <p>Access tokens granted during login are kept in your device's secure storage (iOS Keychain / Android Keystore via the operating system) and are used only to (a) publish posts you explicitly create or schedule, and (b) read statistics for posts and accounts you choose to view. If you enable <em>Cloud publishing</em> for a channel, an encrypted copy is additionally held in our Singapore vault as described in Section 1 — never otherwise. We never access accounts you have not connected, and we never publish anything you did not authorise. Each platform's handling of your data is governed by that platform's own privacy policy.</p>
 
   <h3>2.1 Facebook Pages — via the Facebook Graph API</h3>
   <ul>
@@ -130,7 +131,7 @@
   <h2>6. Data deletion</h2>
   <p>You can delete your data at any time:</p>
   <ul>
-    <li>disconnect a channel inside the app to delete its stored credentials from your device;</li>
+    <li>disconnect a channel inside the app to delete its stored credentials from your device and from our servers (including the encrypted vault copy, if Cloud publishing was on);</li>
     <li>use the in-app wipe to remove all local designs, posts and settings (this does not delete your cloud account);</li>
     <li>delete your cloud account — including everything in Section 1 — by writing to <a href="mailto:support@sosial.app">support@sosial.app</a> from your account email; we will delete it within 30 days. Where a workspace is shared with other members, their own accounts and shared workspace content remain for them;</li>
     <li>revoke the app's access from each platform's settings page (e.g. Facebook Settings → Apps and Websites, TikTok Settings → Manage apps, X Settings → Apps, Google Account → Third-party access, Bluesky Settings → App passwords).</li>
