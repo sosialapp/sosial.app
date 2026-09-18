@@ -30,8 +30,16 @@
 
   <p>Sosial ("the app") is a personal social media companion developed by Egate Worldwide ("we", "us"). This policy explains what information the app handles and how it is protected. Contact: <a href="mailto:support@sosial.app">support@sosial.app</a>.</p>
 
-  <h2>1. Data stays on your device</h2>
-  <p>Sosial is a single-user tool. Your post designs, captions, scheduled posts and settings are stored locally on your own device. We operate no servers that receive, process or store your content. Section 2 lists the only exceptions: the official platform APIs you explicitly connect, which receive only what is needed to publish and measure your own posts.</p>
+  <h2>1. What lives where</h2>
+  <p>Your creative work stays on your device: post designs, captions, scheduled posts and settings are stored locally, and the access tokens for your connected social channels stay in your device's secure storage (Section 2). Separately, if you create a <strong>Sosial Cloud account</strong> in the app, we store your account and workspace on our servers so your identity, team name and notification preferences survive reinstalls and follow you across devices.</p>
+  <p>Our servers are provided by <strong>Supabase</strong> and hosted in <strong>Singapore</strong>. The only personal data we hold there is what your cloud account needs to work:</p>
+  <ul>
+    <li>your email address and sign-in method;</li>
+    <li>your workspace (team) name and your role in it;</li>
+    <li>your notification preferences;</li>
+    <li>account timestamps (created, last signed in).</li>
+  </ul>
+  <p>Passwords are stored only as irreversible hashes by our authentication provider — never in readable form — and database rules (row-level security) ensure each account can see only its own rows. We hold no post designs, captions, photos or videos on our servers, and your social-channel tokens never leave your device.</p>
 
   <h2>2. Connected social accounts</h2>
   <p>To publish on your behalf, the app connects to third-party platforms using their official login flows. You connect each account yourself, one at a time, and each connection asks your permission first. Login happens in your browser through an intermediate page on this website (<a href="/auth.html">sosial.app/auth.html</a>), which only forwards the login code back to the app — it stores nothing.</p>
@@ -110,29 +118,33 @@
   <h3>2.11 Photos shared via temporary links</h3>
   <p>Some channels (Instagram, Threads, TikTok photo posts) can only fetch photos from a public web address. For those, the app uploads your photo to a temporary file host so the platform can pull it for publishing. These links are short-lived, carry no account information, and are never used for anything except delivering your photo to the platform you chose.</p>
 
-  <h2>3. What we collect</h2>
-  <p>We do not collect, transmit or store any personal data on our systems. The app contains no third-party analytics or advertising SDKs. This website (sosial.app) is a static site with no tracking, cookies or accounts. If you email us for support, we receive only what you choose to include in your message.</p>
+  <h2>3. Sosial Cloud sign-in options</h2>
+  <p>You can create your cloud account with an <strong>email address and password</strong>, or with <strong>Sign in with Google</strong>. If you choose Google, Google shows you a consent screen and shares your name, email address and profile picture with us; we store the name and email as your account identity. Authentication itself is handled by Google and Supabase — we never see or store your Google password. You can use email + password without ever touching Google, and vice versa.</p>
 
-  <h2>4. Sharing</h2>
-  <p>We do not sell, rent or share your information with anyone. Content you publish goes directly from your device to the social platforms you selected, under those platforms' own privacy policies.</p>
+  <h2>4. What we collect</h2>
+  <p>Beyond the cloud-account data in Section 1, we do not collect, transmit or store personal data on our systems. The app contains no third-party analytics or advertising SDKs. This website (sosial.app) is a static site with no tracking, cookies or accounts. All traffic between the app and our servers is encrypted in transit. If you email us for support, we receive only what you choose to include in your message.</p>
 
-  <h2>5. Data deletion</h2>
+  <h2>5. Sharing</h2>
+  <p>We do not sell, rent or share your information with anyone. Our infrastructure provider (Supabase, hosting in Singapore) processes your cloud-account data solely to operate the service. Content you publish goes directly from your device to the social platforms you selected, under those platforms' own privacy policies.</p>
+
+  <h2>6. Data deletion</h2>
   <p>You can delete your data at any time:</p>
   <ul>
     <li>disconnect a channel inside the app to delete its stored credentials from your device;</li>
-    <li>use the in-app wipe to remove all local designs, posts and settings;</li>
+    <li>use the in-app wipe to remove all local designs, posts and settings (this does not delete your cloud account);</li>
+    <li>delete your cloud account — including everything in Section 1 — by writing to <a href="mailto:support@sosial.app">support@sosial.app</a> from your account email; we will delete it within 30 days. Where a workspace is shared with other members, their own accounts and shared workspace content remain for them;</li>
     <li>revoke the app's access from each platform's settings page (e.g. Facebook Settings → Apps and Websites, TikTok Settings → Manage apps, X Settings → Apps, Google Account → Third-party access, Bluesky Settings → App passwords).</li>
   </ul>
   <p>Content already published lives on the platforms under their policies — delete it there (or ask us how at <a href="mailto:support@sosial.app">support@sosial.app</a>). To request deletion of anything you sent us by email (e.g. a support message), write to <a href="mailto:support@sosial.app">support@sosial.app</a> and we will delete it within 30 days.</p>
 
-  <h2>6. Children</h2>
+  <h2>7. Children</h2>
   <p>Sosial is not directed at children under 13, and we do not knowingly handle data from children under 13.</p>
 
-  <h2>7. Changes to this policy</h2>
-  <p>If this policy changes, the updated version will be posted at this address with a revised date. If we introduce server-side accounts or sync in the future, this policy will be updated before launch to describe exactly what is stored and why.</p>
+  <h2>8. Changes to this policy</h2>
+  <p>If this policy changes, the updated version will be posted at this address with a revised date before the change takes effect. If we begin storing new categories of data (for example post content for server-side scheduling), this policy will be updated first to describe exactly what is stored and why.</p>
 
-  <h2>8. Contact</h2>
-  <p>Questions about this policy: Egate Worldwide — <a href="mailto:support@sosial.app">support@sosial.app</a>.</p>
+  <h2>9. Contact</h2>
+  <p>Questions about this policy, or any data-protection request (access, correction, deletion): Egate Worldwide — <a href="mailto:support@sosial.app">support@sosial.app</a>.</p>
 
   <footer>
     © 2026 Egate Worldwide · <a href="/">Back to Sosial</a> · <a href="/terms.html">Terms</a>
