@@ -15,6 +15,7 @@
   h1 { font-size: 34px; margin: 12px 0 8px; letter-spacing: -0.5px; }
   .updated { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
   h2 { font-size: 20px; margin: 28px 0 8px; }
+  h3 { font-size: 16px; margin: 18px 0 6px; color: var(--ink); }
   p, li { font-size: 16px; color: #d6d3d1; margin-bottom: 12px; }
   ul { padding-left: 24px; }
   footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid #292524; font-size: 14px; color: var(--muted); }
@@ -25,20 +26,89 @@
 <div class="wrap">
   <div class="kicker">Sosial · Egate Worldwide</div>
   <h1>Privacy Policy</h1>
-  <div class="updated">Last updated: September 17, 2026</div>
+  <div class="updated">Last updated: September 18, 2026</div>
 
   <p>Sosial ("the app") is a personal social media companion developed by Egate Worldwide ("we", "us"). This policy explains what information the app handles and how it is protected. Contact: <a href="mailto:hello@sosial.app">hello@sosial.app</a>.</p>
 
   <h2>1. Data stays on your device</h2>
-  <p>Sosial is a single-user tool. Your post designs, captions, scheduled posts and settings are stored locally on your own device. We operate no servers that receive, process or store your content.</p>
+  <p>Sosial is a single-user tool. Your post designs, captions, scheduled posts and settings are stored locally on your own device. We operate no servers that receive, process or store your content. Section 2 lists the only exceptions: the official platform APIs you explicitly connect, which receive only what is needed to publish and measure your own posts.</p>
 
   <h2>2. Connected social accounts</h2>
-  <p>To publish on your behalf, the app connects to third-party platforms (Facebook, Instagram, Threads, TikTok, X, Bluesky, LinkedIn, Mastodon, Pinterest, YouTube) using their official OAuth login flows. Access tokens granted during login are stored in your device's secure storage and are used only to:</p>
+  <p>To publish on your behalf, the app connects to third-party platforms using their official login flows. You connect each account yourself, one at a time, and each connection asks your permission first. Login happens in your browser through an intermediate page on this website (<a href="/auth.html">sosial.app/auth.html</a>), which only forwards the login code back to the app — it stores nothing.</p>
+  <p>Access tokens granted during login are kept in your device's secure storage (iOS Keychain / Android Keystore via the operating system) and are used only to (a) publish posts you explicitly create or schedule, and (b) read statistics for posts and accounts you choose to view. We never access accounts you have not connected, and we never publish anything you did not authorise. Each platform's handling of your data is governed by that platform's own privacy policy.</p>
+
+  <h3>2.1 Facebook Pages</h3>
   <ul>
-    <li>publish posts you explicitly create or schedule;</li>
-    <li>read basic account statistics (e.g. followers, engagement) you choose to view.</li>
+    <li><strong>What we access:</strong> the list of Facebook Pages you manage; the Page you select; that Page's followers, posts, likes, comments, shares and views.</li>
+    <li><strong>Why:</strong> so you can pick which Page to publish as, publish text/photo/video posts to it, and see how those posts perform.</li>
+    <li><strong>Stored on device:</strong> Page ID and name, Page access token.</li>
   </ul>
-  <p>We never access accounts you have not connected, and we never publish anything you did not authorise. Each platform's handling of your data is governed by that platform's own privacy policy.</p>
+
+  <h3>2.2 Instagram</h3>
+  <ul>
+    <li><strong>What we access:</strong> your Instagram business/creator profile; the photos, reels and stories you publish through the app; like and comment counts on your media.</li>
+    <li><strong>Why:</strong> to publish the content you compose and to show per-post engagement in analytics.</li>
+    <li><strong>Stored on device:</strong> Instagram user ID and username, access token.</li>
+  </ul>
+
+  <h3>2.3 Threads</h3>
+  <ul>
+    <li><strong>What we access:</strong> your Threads profile; the posts you publish through the app; likes, replies, reposts and views on your posts.</li>
+    <li><strong>Why:</strong> to publish your posts and to show engagement in analytics.</li>
+    <li><strong>Stored on device:</strong> Threads user ID and username, access token.</li>
+  </ul>
+
+  <h3>2.4 TikTok</h3>
+  <ul>
+    <li><strong>What we access:</strong> your display name and basic profile; follower and video counts; the videos and photos you upload; the list of your published videos with their likes, comments and views.</li>
+    <li><strong>Why:</strong> to publish the videos and photos you choose (as direct posts or drafts, with the audience you pick) and to show statistics in analytics.</li>
+    <li><strong>Stored on device:</strong> TikTok open ID and display name, access and refresh tokens.</li>
+  </ul>
+
+  <h3>2.5 X (Twitter)</h3>
+  <ul>
+    <li><strong>What we access:</strong> your profile; the posts (tweets) and photos you publish through the app; public metrics (likes, replies, reposts, views) on your posts.</li>
+    <li><strong>Why:</strong> to publish what you compose and to show per-post performance.</li>
+    <li><strong>Stored on device:</strong> X user ID and handle, access and refresh tokens.</li>
+  </ul>
+
+  <h3>2.6 Bluesky</h3>
+  <ul>
+    <li><strong>What we access:</strong> your account (via an app password you generate yourself in Bluesky's settings); the posts and photos you publish; like, reply and repost counts on your posts.</li>
+    <li><strong>Why:</strong> to publish what you compose and to show engagement. Because the credential is an app password you create, you can revoke it at any time from within Bluesky without touching this app.</li>
+    <li><strong>Stored on device:</strong> your handle, account ID, home server address, session tokens.</li>
+  </ul>
+
+  <h3>2.7 LinkedIn</h3>
+  <ul>
+    <li><strong>What we access:</strong> your name and profile identifier; the posts you publish (as yourself, or as a Company Page you administer if you pick one); likes and comments on those posts; Page follower counts when a Company Page is selected.</li>
+    <li><strong>Why:</strong> to publish your posts, to list Company Pages you administer for posting as the business, and to show engagement and follower statistics.</li>
+    <li><strong>Stored on device:</strong> member ID and name, selected Company Page ID and name (if any), access and refresh tokens.</li>
+  </ul>
+
+  <h3>2.8 Mastodon</h3>
+  <ul>
+    <li><strong>What we access:</strong> your account on the Mastodon server (instance) you enter; the posts and photos/videos you publish; favourites, replies and reblogs on your posts.</li>
+    <li><strong>Why:</strong> to publish what you compose on your own server and to show engagement. Each server's own privacy policy also applies to content you post there.</li>
+    <li><strong>Stored on device:</strong> server address, account ID and display name, access token.</li>
+  </ul>
+
+  <h3>2.9 Pinterest</h3>
+  <ul>
+    <li><strong>What we access:</strong> your profile and follower count; your boards; the Pins (photos and videos) you create through the app; impressions, saves and clicks on your Pins.</li>
+    <li><strong>Why:</strong> to save Pins to the board you pick and to show Pin performance in analytics.</li>
+    <li><strong>Stored on device:</strong> username, selected board ID and name, access and refresh tokens.</li>
+  </ul>
+
+  <h3>2.10 YouTube</h3>
+  <ul>
+    <li><strong>What we access:</strong> your channel; the videos you upload through the app (with the listing — public, unlisted or private — you choose); view, like and comment counts on your videos.</li>
+    <li><strong>Why:</strong> to upload the videos you select and to show channel and per-video statistics.</li>
+    <li><strong>Stored on device:</strong> channel name, access and refresh tokens.</li>
+  </ul>
+
+  <h3>2.11 Photos shared via temporary links</h3>
+  <p>Some channels (Instagram, Threads, TikTok photo posts) can only fetch photos from a public web address. For those, the app uploads your photo to a temporary file host so the platform can pull it for publishing. These links are short-lived, carry no account information, and are never used for anything except delivering your photo to the platform you chose.</p>
 
   <h2>3. What we collect</h2>
   <p>We do not collect, transmit or store any personal data on our systems. The app contains no third-party analytics or advertising SDKs. This website (sosial.app) is a static site with no tracking, cookies or accounts. If you email us for support, we receive only what you choose to include in your message.</p>
@@ -51,9 +121,9 @@
   <ul>
     <li>disconnect a channel inside the app to delete its stored credentials from your device;</li>
     <li>use the in-app wipe to remove all local designs, posts and settings;</li>
-    <li>revoke the app's access from each platform's settings page (e.g. Facebook Settings → Apps, TikTok Settings → Manage apps).</li>
+    <li>revoke the app's access from each platform's settings page (e.g. Facebook Settings → Apps and Websites, TikTok Settings → Manage apps, X Settings → Apps, Google Account → Third-party access, Bluesky Settings → App passwords).</li>
   </ul>
-  <p>To request deletion of anything you sent us by email (e.g. a support message), write to <a href="mailto:hello@sosial.app">hello@sosial.app</a> and we will delete it within 30 days.</p>
+  <p>Content already published lives on the platforms under their policies — delete it there (or ask us how at <a href="mailto:hello@sosial.app">hello@sosial.app</a>). To request deletion of anything you sent us by email (e.g. a support message), write to <a href="mailto:hello@sosial.app">hello@sosial.app</a> and we will delete it within 30 days.</p>
 
   <h2>6. Children</h2>
   <p>Sosial is not directed at children under 13, and we do not knowingly handle data from children under 13.</p>
